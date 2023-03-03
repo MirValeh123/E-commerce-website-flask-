@@ -1,0 +1,19 @@
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+
+{% for category, message in messages %}
+<div class="alert alert-{{category}} msg" style="margin: 0;list-style-type:none;">
+    <li class="{{ category }}">{{ message }}</li>
+
+</div>
+
+
+
+{% endfor %}
+<script>
+    setTimeout(function () {
+        $('.msg').hide()
+    }, 2000);
+
+
+</script>
+{% endif %} {% endwith %}

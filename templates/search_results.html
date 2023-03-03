@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+
+<!-- Shop Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5"  style="justify-content:center">
+
+        <!-- Shop Product Start -->
+
+        <div class="col-lg-9 col-md-12" >
+            <div class="row pb-3">
+                {% for p in products %}
+
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    <div class="card product-item border-0 mb-4">
+                        <div
+                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                            <img class="img-fluid w-100 img" src="{{url_for('static',filename='img/')}}{{p.image_url}}"
+                                alt="">
+                        </div>
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <h6 class="text-truncate mb-3">{{p.name}}</h6>
+                            <div class="d-flex justify-content-center">
+                                <h6>{{p.price}}$</h6>
+                                <h6 class="text-muted ml-2"><del>{{p.dis_price}}$</del></h6>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between bg-light border">
+                            <a href="{{url_for('detail',id=p.id)}}" class="btn btn-sm text-dark p-0"><i
+                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<!-- Shop Product End -->
+</div>
+</div>
+<!-- Shop End -->
+
+
+
+
+
+{% endblock %}

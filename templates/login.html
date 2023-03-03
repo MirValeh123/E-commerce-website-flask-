@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+
+<!-- Contact Start -->
+
+<div class="container-fluid pt-5">
+
+    <div class="text-center mb-4">
+
+        <h2 class="section-title px-5"><span class="px-2">Input Credentials For Login</span></h2>
+    </div>
+    <div class="row justify-content-center px-xl-5">
+        <div class="col-lg-4 mb-5">
+            <div class="contact-form">
+                <div id="success"></div>
+                <form name="sentMessage" id="contactForm" novalidate="novalidate" method="post">
+                    {{form.csrf_token}}
+
+                    <div class="control-group">
+                        {{form.email(class='form-control',type='email',id='email',placeholder="Your email",required="required")}}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        {{form.password(class='form-control',type='password',id='password',placeholder="Your password",required="required")}}
+
+
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+{% endblock %}

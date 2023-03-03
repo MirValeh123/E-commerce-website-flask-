@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="{{url_for('static',filename='img/')}}{{product_info.image_url}}"
+                            alt="Image">
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">{{product_info.name}}</h3>
+            <h3 class="font-weight-semi-bold mb-4">{{product_info.price}}$</h3>
+            <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita ea.
+                Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy. Accus
+                labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd rebum.
+            </p>
+            <div class="d-flex mb-3">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="size-1" name="size" checked>
+                    <label class="custom-control-label" for="size-1">{{product_info.size}}</label>
+                </div>
+
+
+            </div>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="color-1" name="color" checked>
+                    <label class="custom-control-label" for="color-1">{{product_info.color}}</label>
+                </div>
+
+            </div>
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <a href="{{ url_for('add_favorite', product_id=product_info.id) }}"><button
+                        class="btn btn-primary px-3"><i class="fa fa-heart mr-1" aria-hidden="true"></i>Add To
+                        Favorites</button></a>
+            </div>
+            <div class="d-flex pt-2">
+                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <div class="d-inline-flex">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews ({{com_count}})</a>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">Product Description</h4>
+                    <p>{{product_info.description}}</p>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-3" style="display: flex;justify-content:space-around">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="mb-4">{{com_count}} review for "{{product_info.name}}"</h4>
+                            {% for i in comments %}
+                            <div class="media mb-4">
+                                <img src="{{url_for('static',filename='img/default-user.webp')}}" alt="Image"
+                                    class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <div class="media-body">
+                                    <h6>{{i.user.name}}<small> - <i>{{i.formatted_time}}</i></small></h6>
+                                    <p>{{i.comments}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="mb-4">Leave a review</h4>
+                        <small>Your email address will not be published. Required fields are marked *</small>
+                        <form method="post" id="review">
+                            {{form.csrf_token}}
+                            <div class="form-group">
+                                <label for="message">Your Review *</label>
+                                {{form.comment(id="message", cols="30" ,rows="5" ,class="form-control")}}
+                            </div>
+                            <div class="form-group mb-0">
+                                <input type="submit" value="Leave Your Review" class="btn btn-primary px-3" id="btn">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Shop Detail End -->
+<div class="container-fluid py-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+    </div>
+    <div class="row px-xl-5">
+        {% for n in name %}
+
+        <div class="owl-carousel related-carousel col-5">
+            <div class="card product-item border-0">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <img style="height:400px" class="img-fluid w-100"
+                        src="{{url_for('static',filename='img/')}}{{n.image_url}}" alt="">
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">{{n.name}}</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>${{n.price}}</h6>
+                        <h6 class="text-muted ml-2"><del>${{n.dis_price}}</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a href="{{url_for('detail',id=n.id)}}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View
+                        Detail</a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<script>
+    $('#btn').click(function () {
+        location.reload();
+    });
+    //Get form element
+    var form = document.getElementById("review");
+    function submitForm(event) {
+
+        //Preventing page refresh
+        event.preventDefault();
+    }
+
+    //Calling a function during form submission.
+    form.addEventListener('submit', submitForm);
+</script>
+
+{% endblock %}

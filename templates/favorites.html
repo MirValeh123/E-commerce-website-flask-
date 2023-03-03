@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+
+<!-- Cart Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 justify-content-center">
+        <div class="col-lg-5 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Products</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    {% for product in favorites %}
+                    <tr>
+                        <td class="align-middle"><img
+                                src="{{url_for('static',filename='img/')}}{{product.product.image_url}}" alt=""
+                                style="width: 50px;"> {{product.product.name}}</td>
+                        <td class="align-middle">{{product.product.price}}</td>
+                        <form action="{{ url_for('delete_product', id=product.product_id) }}" method="post">
+                            <td class="align-middle">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+{% endblock %}
